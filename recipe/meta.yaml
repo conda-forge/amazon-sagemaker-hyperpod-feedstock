@@ -6,24 +6,24 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/amazon_sagemaker_hyperpod-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/amazon_sagemaker_hyperpod-{{ version }}.tar.gz
   sha256: c201e5bc07b5f6b361b07b6cae513503263e5e41e20658385adc95ec699cee75
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:    
-    - python >=3.8
+    - python {{ python_min }}
     - hatchling >=1.5.0
     - jupyterlab >=4.0.0,<4.2
     - hatch-nodejs-version >=0.3.2
     - hatch-jupyter-builder
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - jupyter_server >=2.0.1,<3
     - boto3
     - botocore
@@ -34,6 +34,7 @@ test:
     - amazon_sagemaker_hyperpod
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
 
